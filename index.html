@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo Application</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <img src="assets/images/logo.png" alt="Todo Application">
+      </div>
+    </header>
+    <main class="mainApp">
+      <form id="todoForm" class="todo_add_form">
+        <input name="todoInput" type="text" placeholder="What needs to be done?">
+        <button class="btn btn-primary">Add</button>
+      </form>
+      <div class="todo_list" id="todoList"></div>
+      <div class="footer">
+        <p id="whatLefts">1 item left</p>
+        <div>
+          <a href="#all" class="btn btn-default">All</a>
+          <a href="#active" class="btn btn-default">Active</a>
+          <a href="#completed" class="btn btn-default">Completed</a>
+        </div>
+        <button id="todoClear" class="btn btn-link">Clear Complete</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/js/script.js"></script>
+</body>
+
+</html>
