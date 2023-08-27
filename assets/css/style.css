@@ -109,11 +109,19 @@ img {
   border-bottom: none;
 }
 
-.todo p {
+.todo form {
   flex: 1;
+}
+.todo input {
   font-size: 13px;
   font-weight: 500;
   color: #444;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  box-shadow: none;
+  text-align: left;
+  width: 100%;
 }
 
 .todo.completed p {

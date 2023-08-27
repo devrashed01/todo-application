@@ -1,6 +1,7 @@
 var todoListArray = [];
 initApp();
 tabHandler();
+initUpdateTodoListener();
 
 function initApp() {
   console.log("initializing App....");
@@ -8,7 +9,6 @@ function initApp() {
   var todoForm = document.getElementById("todoForm");
   var todoCompleteClear = document.getElementById("todoCompleteClear");
 
-  invalidateTodoListArray();
   initTodoList();
 
   todoForm.addEventListener("submit", function (e) {
@@ -29,6 +29,7 @@ function initApp() {
     localStorage.setItem("todoListArray", JSON.stringify(todoListArray));
     e.target.elements.todoInput.value = "";
     updateWhatLefts();
+    initUpdateTodoListener();
   });
 
   todoCompleteClear.addEventListener("click", function () {
@@ -44,6 +45,7 @@ function initTodoList(tab) {
   console.log("initializing todo list....");
   var todoList = document.getElementById("todoList");
 
+  invalidateTodoListArray();
   updateWhatLefts();
 
   todoList.innerHTML = "";
@@ -93,7 +95,9 @@ function generateTodoItem({ id, value, completed }) {
             } onchange="todoStatusHandler({id:${id},completed: ${completed}})" id="${id}" type="checkbox">
             <label for="${id}" />
           </div>
-          <p>${value}</p>
+          <form class="todoTextForm">
+          <input id="${id}" name="todo" value="${value}" />
+          </form>
           <button onclick="deleteHandler({id:${id},completed: ${completed}})"><img src="assets/images/delete.svg" alt="Delete"></button>`;
 }
 
@@ -114,8 +118,6 @@ function deleteHandler(e) {
   const newTodoList = todoListArray.filter((item) => item.id !== e.id);
   localStorage.setItem("todoListArray", JSON.stringify(newTodoList));
 
-  var todoList = document.getElementById("todoList");
-  todoList.innerHTML = "";
   initTodoList();
 }
 
@@ -139,4 +141,24 @@ function tabHandler() {
       initTodoList(e.target.hash);
     });
   });
+}
+
+function initUpdateTodoListener() {
+  var todoTextForms = document.querySelectorAll(".todoTextForm");
+  todoTextForms.forEach((form) => {
+    form.removeEventListener("submit", updateTodo);
+    form.addEventListener("submit", updateTodo);
+  });
+}
+
+function updateTodo(event) {
+  event.preventDefault();
+  const { id, value } = event.target.todo;
+  todoListArray.map((item) => {
+    if (item.id === Number(id)) {
+      item.value = value;
+    }
+  });
+  localStorage.setItem("todoListArray", JSON.stringify(todoListArray));
+  event.target.todo.blur();
 }
