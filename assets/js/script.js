@@ -6,7 +6,7 @@ function initApp() {
   console.log("initializing App....");
   var todoList = document.getElementById("todoList");
   var todoForm = document.getElementById("todoForm");
-  var todoClear = document.getElementById("todoClear");
+  var todoCompleteClear = document.getElementById("todoCompleteClear");
 
   invalidateTodoListArray();
   initTodoList();
@@ -31,11 +31,11 @@ function initApp() {
     updateWhatLefts();
   });
 
-  todoClear.addEventListener("click", function () {
-    todoList.innerHTML = "";
-    todoListArray = [];
+  todoCompleteClear.addEventListener("click", function () {
+    todoListArray = todoListArray.filter((item) => !item.completed);
     localStorage.setItem("todoListArray", JSON.stringify(todoListArray));
     updateWhatLefts();
+    initTodoList();
   });
 }
 
@@ -50,7 +50,6 @@ function initTodoList(tab) {
   if (todoListArray?.length) {
     for (var i = 0; i < todoListArray.length; i++) {
       const row = todoListArray[i];
-      console.log(currentTab, "currentTab");
       if (currentTab === "#completed" && !row.completed) continue;
       if (currentTab === "#active" && row.completed) continue;
 
